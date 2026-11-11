@@ -13,5 +13,6 @@ func RegisterLib(ns runtime.Namespace) {
 		Add("post", POST).
 		Add("put", PUT).
 		Add("delete", DELETE).
-		Add("do", REQUEST)
+		Add("do", REQUEST).
+		Add("pages", PAGES)
 }

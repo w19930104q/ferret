@@ -149,6 +149,9 @@ func TestClientDoRedirectPolicy(t *testing.T) {
 	if got := string(res.Body); got != "done" {
 		t.Fatalf("expected followed redirect body %q, got %q", "done", got)
 	}
+	if res.URL != server.URL+"/done" {
+		t.Fatalf("expected final response url after redirects, got %q", res.URL)
+	}
 
 	res, err = newTestClient(t,
 		WithFollowRedirects(false),
@@ -162,6 +165,9 @@ func TestClientDoRedirectPolicy(t *testing.T) {
 	}
 	if res.StatusCode != stdhttp.StatusFound {
 		t.Fatalf("expected redirect response status, got %d", res.StatusCode)
+	}
+	if res.URL != server.URL+"/start" {
+		t.Fatalf("expected response url to match the request without redirects, got %q", res.URL)
 	}
 
 	_, err = newTestClient(t,

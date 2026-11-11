@@ -31,6 +31,7 @@ func TestRegisterLib(t *testing.T) {
 		hasPut := false
 		hasDelete := false
 		hasDo := false
+		hasPages := false
 
 		names := functions.List()
 		for _, fn := range names {
@@ -49,6 +50,9 @@ func TestRegisterLib(t *testing.T) {
 			if fn == "http::do" {
 				hasDo = true
 			}
+			if fn == "http::pages" {
+				hasPages = true
+			}
 		}
 
 		So(hasGet, ShouldBeTrue)
@@ -56,6 +60,7 @@ func TestRegisterLib(t *testing.T) {
 		So(hasPut, ShouldBeTrue)
 		So(hasDelete, ShouldBeTrue)
 		So(hasDo, ShouldBeTrue)
+		So(hasPages, ShouldBeTrue)
 	})
 }
 

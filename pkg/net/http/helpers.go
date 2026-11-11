@@ -82,6 +82,7 @@ func fromStdResponse(res *stdhttp.Response, p *Policy) (*Response, error) {
 			StatusCode: res.StatusCode,
 			Status:     res.Status,
 			Headers:    copyHeaders(res.Header),
+			URL:        responseURL(res),
 		}, nil
 	}
 	defer res.Body.Close()
@@ -96,7 +97,17 @@ func fromStdResponse(res *stdhttp.Response, p *Policy) (*Response, error) {
 		Status:     res.Status,
 		Headers:    copyHeaders(res.Header),
 		Body:       body,
+		URL:        responseURL(res),
 	}, nil
+}
+
+// responseURL reports the final URL reached after redirects.
+func responseURL(res *stdhttp.Response) string {
+	if res.Request != nil && res.Request.URL != nil {
+		return res.Request.URL.String()
+	}
+
+	return ""
 }
 
 func saturatedIncrement(value int64) int64 {
